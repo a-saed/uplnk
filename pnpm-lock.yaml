@@ -30,7 +30,7 @@ importers:
   packages/core:
     dependencies:
       '@uplnk/types':
-        specifier: ^0.1.0
+        specifier: workspace:*
         version: link:../types
     devDependencies:
       '@types/node':

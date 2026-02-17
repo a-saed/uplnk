@@ -50,7 +50,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@uplnk/types": "^0.1.0"
+    "@uplnk/types": "workspace:*"
   },
   "peerDependencies": {},
   "devDependencies": {
