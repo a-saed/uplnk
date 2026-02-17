@@ -13,7 +13,11 @@
     "typecheck": "pnpm -r exec tsc --noEmit",
     "docs:dev": "pnpm --filter uplnk-docs run dev",
     "docs:build": "pnpm --filter uplnk-docs run build",
-    "docs:preview": "pnpm --filter uplnk-docs run preview"
+    "docs:preview": "pnpm --filter uplnk-docs run preview",
+    "prepublishOnly": "pnpm run build && pnpm run test && pnpm run lint",
+    "publish:types": "pnpm --filter @uplnk/types publish",
+    "publish:core": "pnpm --filter @uplnk/core publish",
+    "publish:all": "pnpm run publish:types && pnpm run publish:core"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

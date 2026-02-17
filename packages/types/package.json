@@ -1,8 +1,28 @@
 {
   "name": "@uplnk/types",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Shared TypeScript types for uplnk",
+  "keywords": [
+    "upload",
+    "types",
+    "typescript",
+    "file-upload"
+  ],
+  "author": "Abdulrhman Elsaed",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-saed/uplnk.git",
+    "directory": "packages/types"
+  },
+  "homepage": "https://a-saed.github.io/uplnk/",
+  "bugs": {
+    "url": "https://github.com/a-saed/uplnk/issues"
+  },
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -1,8 +1,35 @@
 {
   "name": "@uplnk/core",
-  "version": "0.0.1",
-  "description": "Framework-agnostic file uploads with progress",
+  "version": "0.1.0",
+  "description": "Framework-agnostic file uploads with progress for signed URLs and HTTP endpoints",
+  "keywords": [
+    "upload",
+    "file-upload",
+    "progress",
+    "xhr",
+    "signed-url",
+    "s3",
+    "gcp",
+    "azure",
+    "batch-upload",
+    "retry",
+    "validation"
+  ],
+  "author": "Abdulrhman Elsaed",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-saed/uplnk.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://a-saed.github.io/uplnk/",
+  "bugs": {
+    "url": "https://github.com/a-saed/uplnk/issues"
+  },
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +50,9 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@uplnk/types": "workspace:*"
+    "@uplnk/types": "^0.1.0"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "@types/node": "^20.0.0",
     "jsdom": "^25.0.1",
