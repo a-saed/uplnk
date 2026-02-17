@@ -11,6 +11,9 @@ uplnk is a low-level, vendor-agnostic upload primitive. It sends a `File` or `Bl
 - **Explicit control** — You choose HTTP method, headers, credentials, timeout, and retry behavior.
 - **Composable** — Chunking, resumable logic, and UI live in your code; uplnk handles only the single-request transport.
 - **Minimal surface** — Easy to audit and trust; no cloud SDKs or UI components.
+- **Batch uploads** — Built-in utilities for concurrent and sequential multi-file uploads with progress tracking.
+- **Smart retries** — Exponential backoff, fixed delay, and custom retry strategies out of the box.
+- **File validation** — Pre-upload size and type validation with helpful error messages.
 
 ## Scope
 
@@ -27,8 +30,55 @@ pnpm add @uplnk/core
 ```ts
 import { uplnk } from "@uplnk/core";
 
-await uplnk({ url: signedUrl, file: fileOrBlob });
+await uplnk({ 
+  url: signedUrl, 
+  file: fileOrBlob,
+  onProgress: (p) => console.log(`${p.percent}%`)
+});
 ```
 
-See [Getting started](/guide/getting-started) and [API reference](/guide/api) for more.
+See [Getting started](/guide/getting-started), [Advanced usage](/guide/advanced), and [API reference](/guide/api) for more.
 :::
+
+## Quick Examples
+
+### With retry and validation
+
+```ts
+import { uplnk, exponentialBackoff, validateFile, FILE_SIZE_PRESETS } from "@uplnk/core";
+
+// Validate before upload
+const error = validateFile(file, {
+  maxSize: FILE_SIZE_PRESETS["10MB"],
+  allowedTypes: ["image/png", "image/jpeg"],
+});
+
+if (error) {
+  console.error("Invalid file:", error);
+  return;
+}
+
+// Upload with automatic retry
+await uplnk({
+  url: signedUrl,
+  file,
+  retry: exponentialBackoff({ maxAttempts: 3 }),
+  onProgress: (p) => console.log(`${p.percent}%`),
+});
+```
+
+### Batch uploads
+
+```ts
+import { batchUpload } from "@uplnk/core";
+
+const result = await batchUpload(
+  files.map((file, i) => ({ url: signedUrls[i], file })),
+  {
+    concurrency: 5,
+    onProgress: (p) => console.log(`${p.completed}/${p.total} uploaded`),
+  }
+);
+```
+:::
+

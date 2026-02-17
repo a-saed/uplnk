@@ -37,8 +37,8 @@ export type UploadError =
 export interface RetryOptions {
   /** Max number of attempts (including first). */
   attempts: number;
-  /** Delay in ms before next attempt. */
-  delayMs: number;
+  /** Delay in ms before next attempt. Can be a number or a function that calculates delay based on attempt. */
+  delayMs: number | ((attempt: number) => number);
   /** Return true to retry on this error. */
   shouldRetry: (err: UploadError, attempt: number) => boolean;
 }

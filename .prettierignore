@@ -1,0 +1,42 @@
+# Dependencies
+node_modules
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist
+build
+.vitepress/dist
+.vitepress/cache
+
+# Logs
+*.log
+logs
+
+# Coverage
+coverage
+.nyc_output
+
+# Cache
+.cache
+.turbo
+
+# Generated files
+*.d.ts
+!src/**/*.d.ts
+
+# Documentation builds
+packages/docs/.vitepress/dist
+packages/docs/.vitepress/cache
+
+# IDE
+.idea
+.vscode
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Markdown in specific locations (generated)
+CHANGELOG.md

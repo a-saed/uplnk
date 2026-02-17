@@ -10,7 +10,43 @@ import type {
   ProgressOptions,
 } from "@uplnk/types";
 
-export type { UplnkOptions, UploadProgress, UploadError, ProgressOptions, RetryOptions } from "@uplnk/types";
+export type {
+  UplnkOptions,
+  UploadProgress,
+  UploadError,
+  ProgressOptions,
+  RetryOptions,
+} from "@uplnk/types";
+export {
+  exponentialBackoff,
+  fixedDelay,
+  networkErrorsOnly,
+  customRetry,
+  calculateBackoffDelay,
+} from "./retry-strategies";
+export {
+  validateFile,
+  validateSize,
+  validateType,
+  formatValidationError,
+  formatBytes,
+  FILE_TYPE_PRESETS,
+  FILE_SIZE_PRESETS,
+} from "./validators";
+export type {
+  ValidationError,
+  FileValidationOptions,
+  SizeValidationOptions,
+  TypeValidationOptions,
+} from "./validators";
+export { batchUpload, sequentialUpload, createUploadQueue } from "./batch";
+export type {
+  BatchUploadStatus,
+  BatchUploadItem,
+  BatchProgress,
+  BatchUploadOptions,
+  BatchUploadResult,
+} from "./batch";
 
 const DEFAULT_METHOD: UplnkOptions["method"] = "PUT";
 const DEFAULT_THROTTLE_MS = 100;
@@ -36,7 +72,7 @@ function emitProgress(
   opts: UplnkOptions,
   progress: UploadProgress,
   lastEmitTime: { value: number },
-  throttleMs: number
+  throttleMs: number,
 ): void {
   const now = Date.now();
   if (now - lastEmitTime.value < throttleMs && progress.percent !== 100) return;
@@ -106,7 +142,11 @@ function doUpload(opts: UplnkOptions): Promise<void> {
         const elapsed = (Date.now() - startTime) / 1000;
         if (elapsed > 0) {
           progress.speed = loaded / elapsed;
-          if (progress.speed && progress.total != null && progress.loaded < progress.total) {
+          if (
+            progress.speed &&
+            progress.total != null &&
+            progress.loaded < progress.total
+          ) {
             progress.eta = (progress.total - progress.loaded) / progress.speed;
           }
         }
@@ -158,7 +198,9 @@ function doUpload(opts: UplnkOptions): Promise<void> {
     onStart?.(xhr);
 
     if (emitOnStart && opts.onProgress) {
-      opts.onProgress(createProgress(0, body instanceof Blob ? body.size : undefined));
+      opts.onProgress(
+        createProgress(0, body instanceof Blob ? body.size : undefined),
+      );
     }
 
     xhr.send(body);
@@ -188,7 +230,8 @@ export async function uplnk(options: UplnkOptions): Promise<void> {
       if (attempt === attempts - 1 || !shouldRetry(lastErr, attempt)) {
         throw lastErr;
       }
-      await new Promise((r) => setTimeout(r, delayMs));
+      const delay = typeof delayMs === "function" ? delayMs(attempt) : delayMs;
+      await new Promise((r) => setTimeout(r, delay));
     }
   }
 

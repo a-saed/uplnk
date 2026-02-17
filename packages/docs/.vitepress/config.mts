@@ -15,6 +15,7 @@ export default defineConfig({
         text: "Guide",
         items: [
           { text: "Getting started", link: "/guide/getting-started" },
+          { text: "Advanced usage", link: "/guide/advanced" },
           { text: "API reference", link: "/guide/api" },
         ],
       },

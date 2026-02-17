@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { uplnk } from "./index";
 
 describe("uplnk", () => {
-  const originalXHR = global.XMLHttpRequest;
+  const originalXHR = globalThis.XMLHttpRequest;
 
   beforeEach(() => {
     // Minimal XHR mock: abort immediately so the request never completes
@@ -45,7 +45,7 @@ describe("uplnk", () => {
       uplnk({
         url: "",
         file,
-      })
+      }),
     ).rejects.toThrow("url is required");
   });
 

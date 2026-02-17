@@ -62,6 +62,60 @@ uplnk treats the URL as an opaque contract: if the URL is valid, it sends the bo
 | Node.js                  | Planned (adapter) |
 | React Native             | Not supported (custom transport required) |
 
+## Validation
+
+Validate files before upload to provide immediate user feedback:
+
+```ts
+import { uplnk, validateFile, formatValidationError, FILE_SIZE_PRESETS } from "@uplnk/core";
+
+const error = validateFile(file, {
+  maxSize: FILE_SIZE_PRESETS["10MB"],
+  allowedTypes: ["image/png", "image/jpeg"],
+});
+
+if (error) {
+  alert(formatValidationError(error));
+  return;
+}
+
+await uplnk({ url: signedUrl, file });
+```
+
+## Retry on failure
+
+Add automatic retry with exponential backoff:
+
+```ts
+import { uplnk, exponentialBackoff } from "@uplnk/core";
+
+await uplnk({
+  url: signedUrl,
+  file,
+  retry: exponentialBackoff({ maxAttempts: 3 }),
+});
+```
+
+## Batch uploads
+
+Upload multiple files concurrently:
+
+```ts
+import { batchUpload } from "@uplnk/core";
+
+const uploads = files.map((file, i) => ({
+  url: signedUrls[i],
+  file,
+}));
+
+const result = await batchUpload(uploads, {
+  concurrency: 5,
+  onProgress: (p) => console.log(`${p.completed}/${p.total} uploaded`),
+});
+```
+
+See the [Advanced usage guide](/guide/advanced) for more patterns and examples.
+
 ## Chunked and resumable uploads
 
 uplnk performs a single atomic request. For chunked or resumable uploads, orchestrate multiple calls yourself:

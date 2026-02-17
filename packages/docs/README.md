@@ -16,4 +16,4 @@ The site is deployed to GitHub Pages via the [Deploy docs](../../.github/workflo
 
 **Setup:** In the repo **Settings → Pages**, set **Source** to **GitHub Actions**. The workflow builds this package and deploys `.vitepress/dist`.
 
-If the repo name is not `uplnk`, update `base` in [.vitepress/config.mts](.vitepress/config.mts) to `"/your-repo-name/"` so assets load correctly.
+If the repo name is not `uplnk`, update `base` in `.vitepress/config.mts` to `"/your-repo-name/"` so assets load correctly.

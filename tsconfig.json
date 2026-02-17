@@ -7,7 +7,9 @@
     "skipLibCheck": true,
     "declaration": true,
     "declarationMap": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["node"],
+    "lib": ["ES2020", "DOM"],
   },
-  "exclude": ["node_modules", "dist", "**/dist"]
+  "exclude": ["node_modules", "dist", "**/dist"],
 }
