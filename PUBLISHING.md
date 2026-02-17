@@ -29,6 +29,7 @@ Should display your npm username.
 ### 3. Create Organization (if needed)
 
 If the `@uplnk` scope doesn't exist:
+
 1. Go to [npmjs.com](https://www.npmjs.com)
 2. Click your profile → "Add Organization"
 3. Create organization named "uplnk"
@@ -73,12 +74,14 @@ pnpm run publish:all
 ### Option 2: Publish Individual Packages
 
 **Publish @uplnk/types:**
+
 ```bash
 cd packages/types
 npm publish --access public
 ```
 
 **Publish @uplnk/core:**
+
 ```bash
 cd packages/core
 npm publish --access public
@@ -89,6 +92,7 @@ npm publish --access public
 ### Semantic Versioning
 
 We follow [SemVer](https://semver.org/):
+
 - **MAJOR** (1.0.0): Breaking changes
 - **MINOR** (0.1.0): New features (backward compatible)
 - **PATCH** (0.0.1): Bug fixes
@@ -96,6 +100,7 @@ We follow [SemVer](https://semver.org/):
 ### Updating Versions
 
 **For patch release (0.1.0 → 0.1.1):**
+
 ```bash
 cd packages/types
 npm version patch
@@ -105,6 +110,7 @@ npm version patch
 ```
 
 **For minor release (0.1.0 → 0.2.0):**
+
 ```bash
 cd packages/types
 npm version minor
@@ -114,6 +120,7 @@ npm version minor
 ```
 
 **For major release (0.1.0 → 1.0.0):**
+
 ```bash
 cd packages/types
 npm version major
@@ -133,6 +140,7 @@ Alternatively, manually edit `package.json` in both packages:
 ```
 
 **Important:** When updating `@uplnk/core`, also update the dependency version:
+
 ```json
 {
   "dependencies": {
@@ -146,6 +154,7 @@ Alternatively, manually edit `package.json` in both packages:
 ### 1. Verify Publication
 
 Check packages on npm:
+
 - https://www.npmjs.com/package/@uplnk/types
 - https://www.npmjs.com/package/@uplnk/core
 
@@ -185,6 +194,7 @@ git push origin main
 ### "You do not have permission to publish"
 
 Solution: Package name might be taken or you need access.
+
 ```bash
 # Check if package exists
 npm view @uplnk/core
@@ -193,11 +203,12 @@ npm view @uplnk/core
 # Use: npm publish --access public
 ```
 
-### "workspace:* dependency" Error
+### "workspace:\* dependency" Error
 
 Solution: The workspace protocol must be converted before publishing.
 
 **For @uplnk/core**, change in `package.json`:
+
 ```json
 // Before
 "dependencies": {
@@ -215,6 +226,7 @@ We've already fixed this in the package.json files.
 ### "package.json is missing"
 
 Solution: Make sure you're in the correct package directory or use filters:
+
 ```bash
 pnpm --filter @uplnk/core publish
 ```
@@ -222,6 +234,7 @@ pnpm --filter @uplnk/core publish
 ### Build Artifacts Missing
 
 Solution: Build before publishing:
+
 ```bash
 pnpm run build
 ```
@@ -229,6 +242,7 @@ pnpm run build
 ### Two-Factor Authentication (2FA)
 
 If you have 2FA enabled on npm:
+
 1. You'll be prompted for an OTP (One-Time Password)
 2. Get the code from your authenticator app
 3. Enter it when prompted
@@ -253,9 +267,9 @@ jobs:
       - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-      
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
       - run: pnpm run test
@@ -266,6 +280,7 @@ jobs:
 ```
 
 To use this:
+
 1. Create an npm access token at https://www.npmjs.com/settings/tokens
 2. Add it as `NPM_TOKEN` in GitHub repository secrets
 3. Create a GitHub release to trigger publishing
@@ -301,6 +316,7 @@ To use this:
 ## Current Status
 
 **Published Versions:**
+
 - @uplnk/types: Check at https://www.npmjs.com/package/@uplnk/types
 - @uplnk/core: Check at https://www.npmjs.com/package/@uplnk/core
 
