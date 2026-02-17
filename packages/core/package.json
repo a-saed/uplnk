@@ -27,6 +27,7 @@
     "url": "https://github.com/a-saed/uplnk/issues"
   },
   "type": "module",
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
@@ -41,7 +42,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts",
@@ -52,7 +54,6 @@
   "dependencies": {
     "@uplnk/types": "workspace:*"
   },
-  "peerDependencies": {},
   "devDependencies": {
     "@types/node": "^20.0.0",
     "jsdom": "^25.0.1",

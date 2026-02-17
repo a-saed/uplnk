@@ -1,0 +1,34 @@
+# Only include essential files in npm package
+# The "files" field in package.json is the primary control,
+# but this provides an extra safety layer
+
+# Source files (only dist/ should be published)
+src/
+*.test.ts
+*.spec.ts
+**/__tests__/
+**/__mocks__/
+
+# Build configs
+tsconfig.json
+tsup.config.ts
+
+# Development files
+.eslintrc*
+.prettierrc*
+.editorconfig
+
+# Documentation (users should visit the docs site)
+*.md
+!README.md
+
+# CI/CD
+.github/
+
+# Misc
+.DS_Store
+*.log
+*.tgz
+node_modules/
+coverage/
+.nyc_output/
