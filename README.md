@@ -91,11 +91,11 @@ const result = await batchUpload(
 
 ## Packages
 
-| Package                        | Description                           |
-| ------------------------------ | ------------------------------------- |
-| [@uplnk/core](packages/core)   | Main upload implementation            |
-| [@uplnk/types](packages/types) | Shared TypeScript types               |
-| [uplnk-docs](packages/docs)    | Documentation site (VitePress)        |
+| Package                        | Description                    |
+| ------------------------------ | ------------------------------ |
+| [@uplnk/core](packages/core)   | Main upload implementation     |
+| [@uplnk/types](packages/types) | Shared TypeScript types        |
+| [uplnk-docs](packages/docs)    | Documentation site (VitePress) |
 
 ## Use Cases
 
@@ -120,6 +120,7 @@ pnpm run docs:dev     # Run docs locally
 ## Browser Support
 
 Modern browsers with support for:
+
 - `XMLHttpRequest` with upload progress events
 - `File` and `Blob` APIs
 - ES2020+ features
