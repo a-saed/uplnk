@@ -54,7 +54,7 @@ const queue = createUploadQueue({
 });
 
 // Add initial files
-files.forEach(file => {
+files.forEach((file) => {
   queue.add({ url: getSignedUrl(file), file });
 });
 
@@ -62,8 +62,8 @@ files.forEach(file => {
 queue.start();
 
 // Add more files while uploads are running
-dropzone.on('filesAdded', (newFiles) => {
-  newFiles.forEach(file => {
+dropzone.on("filesAdded", (newFiles) => {
+  newFiles.forEach((file) => {
     queue.add({ url: getSignedUrl(file), file });
   });
 });
@@ -101,9 +101,9 @@ await uplnk({
   file,
   retry: exponentialBackoff({
     maxAttempts: 5,
-    baseDelayMs: 1000,    // Start with 1s
-    maxDelayMs: 30000,    // Cap at 30s
-    jitter: true,         // Add randomness to prevent thundering herd
+    baseDelayMs: 1000, // Start with 1s
+    maxDelayMs: 30000, // Cap at 30s
+    jitter: true, // Add randomness to prevent thundering herd
     retryableStatuses: [408, 429, 500, 502, 503, 504],
   }),
   onProgress: (p) => console.log(`${p.percent}%`),
@@ -158,12 +158,12 @@ await uplnk({
       if (err.type === "http" && err.status >= 400 && err.status < 500) {
         return false;
       }
-      
+
       // Retry 503 only up to 3 times
       if (err.type === "http" && err.status === 503) {
         return attempt < 3;
       }
-      
+
       // Always retry network errors
       return err.type === "network" || err.type === "timeout";
     },
@@ -240,12 +240,12 @@ const error = validateFile(file, {
     if (file.name.length > 255) {
       return { type: "custom", message: "Filename too long (max 255 characters)" };
     }
-    
+
     // Check for specific patterns
     if (/[<>:"|?*]/.test(file.name)) {
       return { type: "custom", message: "Filename contains invalid characters" };
     }
-    
+
     // File is valid
     return null;
   },
@@ -262,12 +262,12 @@ import { validateFile, formatValidationError } from "@uplnk/core";
 const validFiles = [];
 const invalidFiles = [];
 
-files.forEach(file => {
+files.forEach((file) => {
   const error = validateFile(file, {
     maxSize: 10 * 1024 * 1024,
     allowedTypes: ["image/png", "image/jpeg"],
   });
-  
+
   if (error) {
     invalidFiles.push({
       file,
@@ -284,7 +284,7 @@ if (invalidFiles.length > 0) {
 
 if (validFiles.length > 0) {
   // Upload valid files
-  await batchUpload(validFiles.map(file => ({ url: getSignedUrl(file), file })));
+  await batchUpload(validFiles.map((file) => ({ url: getSignedUrl(file), file })));
 }
 ```
 
@@ -303,22 +303,22 @@ try {
     file,
     onProgress: (p) => updateProgress(p),
   });
-  
+
   showSuccess("Upload completed!");
 } catch (err) {
   switch (err.type) {
     case "abort":
       showWarning("Upload was cancelled");
       break;
-    
+
     case "timeout":
       showError("Upload timed out. Please try again.");
       break;
-    
+
     case "network":
       showError("Network error. Check your connection and try again.");
       break;
-    
+
     case "http":
       if (err.status === 403) {
         showError("Upload URL expired. Please refresh and try again.");
@@ -346,7 +346,7 @@ const result = await batchUpload(uploads, {
   stopOnError: false, // Continue even if some fail
   onItemError: (item) => {
     logError(`Upload ${item.id} failed`, item.error);
-    
+
     // Optionally retry individual failures
     if (item.error.type === "network") {
       retryQueue.push(item);
@@ -357,9 +357,9 @@ const result = await batchUpload(uploads, {
 // Handle overall results
 if (result.failed > 0) {
   showWarning(`${result.failed} of ${result.items.length} uploads failed`);
-  
+
   // Get failed items for potential retry
-  const failedItems = result.items.filter(i => i.status === "failed");
+  const failedItems = result.items.filter((i) => i.status === "failed");
   offerRetry(failedItems);
 }
 ```
@@ -375,14 +375,14 @@ await uplnk({
   url,
   file,
   progress: {
-    throttleMs: 50,      // Update every 50ms (default: 100ms)
-    emitOnStart: true,   // Emit 0% at start
-    emitOnEnd: true,     // Emit 100% at end
+    throttleMs: 50, // Update every 50ms (default: 100ms)
+    emitOnStart: true, // Emit 0% at start
+    emitOnEnd: true, // Emit 100% at end
   },
   onProgress: (p) => {
     // Update UI
     progressBar.style.width = `${p.percent ?? 0}%`;
-    
+
     // Show speed and ETA
     if (p.speed) {
       speedLabel.textContent = formatBytes(p.speed) + "/s";
@@ -409,7 +409,7 @@ Track overall progress across multiple uploads:
 let totalBytes = 0;
 let uploadedBytes = 0;
 
-files.forEach(file => {
+files.forEach((file) => {
   totalBytes += file.size;
 });
 
@@ -419,16 +419,16 @@ const uploads = files.map((file, i) => ({
   onProgress: (p) => {
     // Track individual progress
     uploadProgress[i] = p.loaded;
-    
+
     // Calculate total
     uploadedBytes = Object.values(uploadProgress).reduce((sum, bytes) => sum + bytes, 0);
     const overallPercent = (uploadedBytes / totalBytes) * 100;
-    
+
     updateMainProgress(overallPercent);
   },
 }));
 
-await Promise.all(uploads.map(opts => uplnk(opts)));
+await Promise.all(uploads.map((opts) => uplnk(opts)));
 ```
 
 ## Abort and Cancellation
@@ -506,35 +506,35 @@ Use lifecycle hooks for logging, analytics, and custom behavior:
 await uplnk({
   url,
   file,
-  
+
   onStart: (xhr) => {
     console.log("Upload starting");
     logAnalytics("upload_start", { fileSize: file.size });
-    
+
     // Optionally modify XHR before send
     // (though headers should be set via options.headers)
   },
-  
+
   onProgress: (p) => {
     updateUI(p);
-    
+
     // Log milestones
     if (p.percent === 25 || p.percent === 50 || p.percent === 75) {
       logAnalytics("upload_progress", { percent: p.percent });
     }
   },
-  
+
   onResponse: (xhr) => {
     console.log("Upload successful", xhr.status);
     logAnalytics("upload_complete", {
       status: xhr.status,
       duration: Date.now() - startTime,
     });
-    
+
     // Access response if needed
     const responseData = xhr.responseText;
   },
-  
+
   onError: (err, xhr) => {
     console.error("Upload failed", err);
     logAnalytics("upload_error", {
@@ -676,12 +676,12 @@ const CHUNK_SIZE = 5 * 1024 * 1024; // 5MB chunks
 
 async function uploadLargeFile(file: File, getChunkUrl: (index: number) => Promise<string>) {
   const chunks = Math.ceil(file.size / CHUNK_SIZE);
-  
+
   for (let i = 0; i < chunks; i++) {
     const start = i * CHUNK_SIZE;
     const end = Math.min(start + CHUNK_SIZE, file.size);
     const chunk = file.slice(start, end);
-    
+
     const url = await getChunkUrl(i);
     await uplnk({
       url,
@@ -705,8 +705,8 @@ const BATCH_SIZE = 10;
 for (let i = 0; i < allFiles.length; i += BATCH_SIZE) {
   const batch = allFiles.slice(i, i + BATCH_SIZE);
   await batchUpload(
-    batch.map(file => ({ url: getSignedUrl(file), file })),
-    { concurrency: 5 }
+    batch.map((file) => ({ url: getSignedUrl(file), file })),
+    { concurrency: 5 },
   );
 }
 ```

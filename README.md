@@ -21,10 +21,10 @@ uplnk is a low-level, vendor-agnostic upload primitive. It sends a `File` or `Bl
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| [@uplnk/core](packages/core) | Core upload implementation with retry, validation, and batch utilities |
-| [@uplnk/types](packages/types) | Shared TypeScript types |
+| Package                        | Description                                                            |
+| ------------------------------ | ---------------------------------------------------------------------- |
+| [@uplnk/core](packages/core)   | Core upload implementation with retry, validation, and batch utilities |
+| [@uplnk/types](packages/types) | Shared TypeScript types                                                |
 
 ## Install
 
@@ -151,7 +151,12 @@ await uplnk({
 Validate files before upload with helpful error messages:
 
 ```ts
-import { validateFile, FILE_TYPE_PRESETS, FILE_SIZE_PRESETS, formatValidationError } from "@uplnk/core";
+import {
+  validateFile,
+  FILE_TYPE_PRESETS,
+  FILE_SIZE_PRESETS,
+  formatValidationError,
+} from "@uplnk/core";
 
 const error = validateFile(file, {
   maxSize: FILE_SIZE_PRESETS["10MB"],
@@ -203,6 +208,7 @@ await queue.waitForCompletion();
 ## Browser Support
 
 Works in all modern browsers that support:
+
 - `XMLHttpRequest` with upload progress events
 - `File` and `Blob` APIs
 - `Promise` and `async`/`await`

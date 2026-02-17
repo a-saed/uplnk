@@ -9,7 +9,7 @@
     "declarationMap": true,
     "noEmit": true,
     "types": ["node"],
-    "lib": ["ES2020", "DOM"],
+    "lib": ["ES2020", "DOM"]
   },
-  "exclude": ["node_modules", "dist", "**/dist"],
+  "exclude": ["node_modules", "dist", "**/dist"]
 }

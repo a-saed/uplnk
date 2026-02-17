@@ -8,21 +8,21 @@ Executes a single HTTP upload. Resolves when the request completes successfully 
 
 #### Options
 
-| Option | Type | Required | Default | Description |
-|--------|------|----------|---------|-------------|
-| `url` | `string` | Yes | — | Destination URL (e.g. signed URL). |
-| `file` | `File \| Blob` | Yes | — | The payload to upload. |
-| `method` | `'PUT' \| 'POST' \| 'PATCH'` | No | `'PUT'` | HTTP method. |
-| `headers` | `Record<string, string>` | No | `{}` | Request headers. |
-| `withCredentials` | `boolean` | No | `false` | Send cookies / credentials. |
-| `signal` | `AbortSignal` | No | — | Abort the in-flight upload. |
-| `timeoutMs` | `number` | No | — | Abort after this many milliseconds. |
-| `progress` | `ProgressOptions` | No | — | Throttle and lifecycle of progress events. |
-| `onProgress` | `(progress: UploadProgress) => void` | No | — | Progress callback. |
-| `onStart` | `(xhr: XMLHttpRequest) => void` | No | — | Called before `send()`. |
-| `onResponse` | `(xhr: XMLHttpRequest) => void` | No | — | Called on completion (before the promise resolves). |
-| `onError` | `(err: UploadError, xhr?: XMLHttpRequest) => void` | No | — | Called before the promise rejects. |
-| `retry` | `RetryOptions` | No | — | Retry configuration (opt-in). |
+| Option            | Type                                               | Required | Default | Description                                         |
+| ----------------- | -------------------------------------------------- | -------- | ------- | --------------------------------------------------- |
+| `url`             | `string`                                           | Yes      | —       | Destination URL (e.g. signed URL).                  |
+| `file`            | `File \| Blob`                                     | Yes      | —       | The payload to upload.                              |
+| `method`          | `'PUT' \| 'POST' \| 'PATCH'`                       | No       | `'PUT'` | HTTP method.                                        |
+| `headers`         | `Record<string, string>`                           | No       | `{}`    | Request headers.                                    |
+| `withCredentials` | `boolean`                                          | No       | `false` | Send cookies / credentials.                         |
+| `signal`          | `AbortSignal`                                      | No       | —       | Abort the in-flight upload.                         |
+| `timeoutMs`       | `number`                                           | No       | —       | Abort after this many milliseconds.                 |
+| `progress`        | `ProgressOptions`                                  | No       | —       | Throttle and lifecycle of progress events.          |
+| `onProgress`      | `(progress: UploadProgress) => void`               | No       | —       | Progress callback.                                  |
+| `onStart`         | `(xhr: XMLHttpRequest) => void`                    | No       | —       | Called before `send()`.                             |
+| `onResponse`      | `(xhr: XMLHttpRequest) => void`                    | No       | —       | Called on completion (before the promise resolves). |
+| `onError`         | `(err: UploadError, xhr?: XMLHttpRequest) => void` | No       | —       | Called before the promise rejects.                  |
+| `retry`           | `RetryOptions`                                     | No       | —       | Retry configuration (opt-in).                       |
 
 ---
 
@@ -49,14 +49,14 @@ console.log(`${result.successful} succeeded, ${result.failed} failed`);
 
 #### Batch Options
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `concurrency` | `number` | `3` | Maximum concurrent uploads. |
-| `onProgress` | `(progress: BatchProgress) => void` | — | Called when batch progress changes. |
-| `onItemComplete` | `(item: BatchUploadItem) => void` | — | Called when an upload completes. |
-| `onItemError` | `(item: BatchUploadItem) => void` | — | Called when an upload fails. |
-| `stopOnError` | `boolean` | `false` | Stop all uploads on first error. |
-| `signal` | `AbortSignal` | — | Abort all uploads. |
+| Option           | Type                                | Default | Description                         |
+| ---------------- | ----------------------------------- | ------- | ----------------------------------- |
+| `concurrency`    | `number`                            | `3`     | Maximum concurrent uploads.         |
+| `onProgress`     | `(progress: BatchProgress) => void` | —       | Called when batch progress changes. |
+| `onItemComplete` | `(item: BatchUploadItem) => void`   | —       | Called when an upload completes.    |
+| `onItemError`    | `(item: BatchUploadItem) => void`   | —       | Called when an upload fails.        |
+| `stopOnError`    | `boolean`                           | `false` | Stop all uploads on first error.    |
+| `signal`         | `AbortSignal`                       | —       | Abort all uploads.                  |
 
 ### `sequentialUpload(uploads, options): Promise<BatchUploadResult>`
 
@@ -259,21 +259,21 @@ Available presets: `1MB`, `5MB`, `10MB`, `50MB`, `100MB`, `500MB`, `1GB`.
 
 ### `UploadProgress`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `loaded` | `number` | Bytes uploaded so far. |
-| `total` | `number \| undefined` | Total bytes when computable. |
-| `percent` | `number \| undefined` | 0–100. |
-| `speed` | `number \| undefined` | Bytes per second. |
-| `eta` | `number \| undefined` | Estimated seconds remaining. |
+| Field     | Type                  | Description                  |
+| --------- | --------------------- | ---------------------------- |
+| `loaded`  | `number`              | Bytes uploaded so far.       |
+| `total`   | `number \| undefined` | Total bytes when computable. |
+| `percent` | `number \| undefined` | 0–100.                       |
+| `speed`   | `number \| undefined` | Bytes per second.            |
+| `eta`     | `number \| undefined` | Estimated seconds remaining. |
 
 ### `ProgressOptions`
 
-| Field | Type | Default | Description |
-|-------|------|---------|-------------|
-| `throttleMs` | `number` | `100` | Minimum ms between progress callbacks. |
-| `emitOnStart` | `boolean` | `true` | Emit initial 0% progress. |
-| `emitOnEnd` | `boolean` | `true` | Emit final 100% progress. |
+| Field         | Type      | Default | Description                            |
+| ------------- | --------- | ------- | -------------------------------------- |
+| `throttleMs`  | `number`  | `100`   | Minimum ms between progress callbacks. |
+| `emitOnStart` | `boolean` | `true`  | Emit initial 0% progress.              |
+| `emitOnEnd`   | `boolean` | `true`  | Emit final 100% progress.              |
 
 ### `UploadError`
 
@@ -297,11 +297,11 @@ try {
 
 ### `RetryOptions`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `attempts` | `number` | Max attempts (including the first). |
-| `delayMs` | `number \| ((attempt: number) => number)` | Delay before the next attempt. Can be fixed or dynamic. |
-| `shouldRetry` | `(err: UploadError, attempt: number) => boolean` | Return `true` to retry. |
+| Field         | Type                                             | Description                                             |
+| ------------- | ------------------------------------------------ | ------------------------------------------------------- |
+| `attempts`    | `number`                                         | Max attempts (including the first).                     |
+| `delayMs`     | `number \| ((attempt: number) => number)`        | Delay before the next attempt. Can be fixed or dynamic. |
+| `shouldRetry` | `(err: UploadError, attempt: number) => boolean` | Return `true` to retry.                                 |
 
 Example:
 
@@ -319,36 +319,36 @@ Use retries only when appropriate; signed URLs may expire.
 
 ### `BatchProgress`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `total` | `number` | Total number of uploads. |
-| `completed` | `number` | Number of completed uploads. |
-| `failed` | `number` | Number of failed uploads. |
-| `pending` | `number` | Number of pending uploads. |
-| `uploading` | `number` | Number of currently uploading. |
-| `percent` | `number` | Overall completion percentage (0-100). |
-| `totalBytes` | `number` | Total bytes across all uploads. |
-| `uploadedBytes` | `number` | Uploaded bytes across all uploads. |
+| Field           | Type     | Description                            |
+| --------------- | -------- | -------------------------------------- |
+| `total`         | `number` | Total number of uploads.               |
+| `completed`     | `number` | Number of completed uploads.           |
+| `failed`        | `number` | Number of failed uploads.              |
+| `pending`       | `number` | Number of pending uploads.             |
+| `uploading`     | `number` | Number of currently uploading.         |
+| `percent`       | `number` | Overall completion percentage (0-100). |
+| `totalBytes`    | `number` | Total bytes across all uploads.        |
+| `uploadedBytes` | `number` | Uploaded bytes across all uploads.     |
 
 ### `BatchUploadItem`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | `string` | Unique identifier. |
-| `status` | `'pending' \| 'uploading' \| 'completed' \| 'failed'` | Current status. |
-| `options` | `UplnkOptions` | Upload options. |
-| `progress` | `UploadProgress?` | Current progress. |
-| `error` | `UploadError?` | Error if failed. |
-| `completedAt` | `number?` | Completion timestamp. |
+| Field         | Type                                                  | Description           |
+| ------------- | ----------------------------------------------------- | --------------------- |
+| `id`          | `string`                                              | Unique identifier.    |
+| `status`      | `'pending' \| 'uploading' \| 'completed' \| 'failed'` | Current status.       |
+| `options`     | `UplnkOptions`                                        | Upload options.       |
+| `progress`    | `UploadProgress?`                                     | Current progress.     |
+| `error`       | `UploadError?`                                        | Error if failed.      |
+| `completedAt` | `number?`                                             | Completion timestamp. |
 
 ### `BatchUploadResult`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `items` | `BatchUploadItem[]` | All upload items with final status. |
-| `successful` | `number` | Number of successful uploads. |
-| `failed` | `number` | Number of failed uploads. |
-| `aborted` | `boolean` | Whether the batch was aborted. |
+| Field        | Type                | Description                         |
+| ------------ | ------------------- | ----------------------------------- |
+| `items`      | `BatchUploadItem[]` | All upload items with final status. |
+| `successful` | `number`            | Number of successful uploads.       |
+| `failed`     | `number`            | Number of failed uploads.           |
+| `aborted`    | `boolean`           | Whether the batch was aborted.      |
 
 ### `ValidationError`
 
@@ -362,10 +362,10 @@ type ValidationError =
 
 ### `FileValidationOptions`
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `maxSize` | `number?` | Maximum file size in bytes. |
-| `minSize` | `number?` | Minimum file size in bytes. |
-| `allowedTypes` | `string[]?` | Allowed MIME types. |
-| `allowedExtensions` | `string[]?` | Allowed file extensions. |
-| `customValidator` | `((file: File \| Blob) => ValidationError \| null)?` | Custom validation function. |
+| Field               | Type                                                 | Description                 |
+| ------------------- | ---------------------------------------------------- | --------------------------- |
+| `maxSize`           | `number?`                                            | Maximum file size in bytes. |
+| `minSize`           | `number?`                                            | Minimum file size in bytes. |
+| `allowedTypes`      | `string[]?`                                          | Allowed MIME types.         |
+| `allowedExtensions` | `string[]?`                                          | Allowed file extensions.    |
+| `customValidator`   | `((file: File \| Blob) => ValidationError \| null)?` | Custom validation function. |

@@ -38,9 +38,8 @@ export function exponentialBackoff(options?: {
 
   return {
     attempts: maxAttempts,
-    delayMs: (attempt: number) =>
-      calculateBackoffDelay(attempt, baseDelayMs, maxDelayMs, jitter),
-    shouldRetry: (err: UploadError, attempt: number): boolean => {
+    delayMs: (attempt: number) => calculateBackoffDelay(attempt, baseDelayMs, maxDelayMs, jitter),
+    shouldRetry: (err: UploadError, _attempt: number): boolean => {
       // Don't retry aborts
       if (err.type === "abort") return false;
 
@@ -147,10 +146,7 @@ export function calculateBackoffDelay(
   maxDelayMs: number,
   jitter: boolean,
 ): number {
-  const exponentialDelay = Math.min(
-    baseDelayMs * Math.pow(2, attempt),
-    maxDelayMs,
-  );
+  const exponentialDelay = Math.min(baseDelayMs * Math.pow(2, attempt), maxDelayMs);
 
   if (!jitter) return exponentialDelay;
 

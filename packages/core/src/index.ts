@@ -3,12 +3,7 @@
  * Browser only (XMLHttpRequest).
  */
 
-import type {
-  UplnkOptions,
-  UploadProgress,
-  UploadError,
-  ProgressOptions,
-} from "@uplnk/types";
+import type { UplnkOptions, UploadProgress, UploadError, ProgressOptions } from "@uplnk/types";
 
 export type {
   UplnkOptions,
@@ -63,8 +58,7 @@ function defaultProgressOptions(): Required<ProgressOptions> {
 
 function createProgress(loaded: number, total?: number): UploadProgress {
   const totalNum = total ?? 0;
-  const percent =
-    totalNum > 0 ? Math.min(100, (loaded / totalNum) * 100) : undefined;
+  const percent = totalNum > 0 ? Math.min(100, (loaded / totalNum) * 100) : undefined;
   return { loaded, total: totalNum || undefined, percent };
 }
 
@@ -142,11 +136,7 @@ function doUpload(opts: UplnkOptions): Promise<void> {
         const elapsed = (Date.now() - startTime) / 1000;
         if (elapsed > 0) {
           progress.speed = loaded / elapsed;
-          if (
-            progress.speed &&
-            progress.total != null &&
-            progress.loaded < progress.total
-          ) {
+          if (progress.speed && progress.total != null && progress.loaded < progress.total) {
             progress.eta = (progress.total - progress.loaded) / progress.speed;
           }
         }
@@ -198,9 +188,7 @@ function doUpload(opts: UplnkOptions): Promise<void> {
     onStart?.(xhr);
 
     if (emitOnStart && opts.onProgress) {
-      opts.onProgress(
-        createProgress(0, body instanceof Blob ? body.size : undefined),
-      );
+      opts.onProgress(createProgress(0, body instanceof Blob ? body.size : undefined));
     }
 
     xhr.send(body);

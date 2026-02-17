@@ -31,8 +31,7 @@ With progress:
 await uplnk({
   url: signedUrl,
   file: fileOrBlob,
-  onProgress: (p) =>
-    console.log(`${p.percent ?? 0}% uploaded, ETA ${p.eta ?? 0}s`),
+  onProgress: (p) => console.log(`${p.percent ?? 0}% uploaded, ETA ${p.eta ?? 0}s`),
 });
 ```
 
@@ -56,10 +55,10 @@ uplnk treats the URL as an opaque contract: if the URL is valid, it sends the bo
 
 ## Environment support
 
-| Environment              | Status   |
-| ------------------------ | -------- |
-| Browser (XMLHttpRequest) | Supported |
-| Node.js                  | Planned (adapter) |
+| Environment              | Status                                    |
+| ------------------------ | ----------------------------------------- |
+| Browser (XMLHttpRequest) | Supported                                 |
+| Node.js                  | Planned (adapter)                         |
 | React Native             | Not supported (custom transport required) |
 
 ## Validation

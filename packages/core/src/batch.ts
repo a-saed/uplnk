@@ -217,7 +217,8 @@ export async function batchUpload(
 
       // Start new uploads up to concurrency limit
       while (active.length < concurrency && queue.length > 0) {
-        const item = queue.shift()!;
+        const item = queue.shift();
+        if (!item) break;
         const promise = processItem(item).then(() => {
           const index = active.indexOf(promise);
           if (index > -1) active.splice(index, 1);

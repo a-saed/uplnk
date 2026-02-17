@@ -30,8 +30,7 @@ export interface TypeValidationOptions {
 }
 
 /** Combined validation options. */
-export interface FileValidationOptions
-  extends SizeValidationOptions, TypeValidationOptions {
+export interface FileValidationOptions extends SizeValidationOptions, TypeValidationOptions {
   /** Custom validation function. */
   customValidator?: (file: File | Blob) => ValidationError | null;
 }
@@ -112,16 +111,10 @@ export function validateType(
   }
 
   // Check file extension (only for File objects)
-  if (
-    allowedExtensions &&
-    allowedExtensions.length > 0 &&
-    file instanceof File
-  ) {
+  if (allowedExtensions && allowedExtensions.length > 0 && file instanceof File) {
     const extension = getFileExtension(file.name);
     const normalizedAllowed = allowedExtensions.map((ext) =>
-      ext.toLowerCase().startsWith(".")
-        ? ext.toLowerCase()
-        : `.${ext.toLowerCase()}`,
+      ext.toLowerCase().startsWith(".") ? ext.toLowerCase() : `.${ext.toLowerCase()}`,
     );
     const normalizedActual = extension.toLowerCase();
 
@@ -254,14 +247,7 @@ function getFileExtension(filename: string): string {
  */
 export const FILE_TYPE_PRESETS = {
   /** Common image types */
-  images: [
-    "image/png",
-    "image/jpeg",
-    "image/jpg",
-    "image/gif",
-    "image/webp",
-    "image/svg+xml",
-  ],
+  images: ["image/png", "image/jpeg", "image/jpg", "image/gif", "image/webp", "image/svg+xml"],
 
   /** Common video types */
   videos: ["video/mp4", "video/webm", "video/ogg", "video/quicktime"],
@@ -280,11 +266,7 @@ export const FILE_TYPE_PRESETS = {
   ],
 
   /** Common archive types */
-  archives: [
-    "application/zip",
-    "application/x-rar-compressed",
-    "application/x-7z-compressed",
-  ],
+  archives: ["application/zip", "application/x-rar-compressed", "application/x-7z-compressed"],
 } as const;
 
 /**

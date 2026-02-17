@@ -30,10 +30,10 @@ pnpm add @uplnk/core
 ```ts
 import { uplnk } from "@uplnk/core";
 
-await uplnk({ 
-  url: signedUrl, 
+await uplnk({
+  url: signedUrl,
   file: fileOrBlob,
-  onProgress: (p) => console.log(`${p.percent}%`)
+  onProgress: (p) => console.log(`${p.percent}%`),
 });
 ```
 
@@ -77,8 +77,8 @@ const result = await batchUpload(
   {
     concurrency: 5,
     onProgress: (p) => console.log(`${p.completed}/${p.total} uploaded`),
-  }
+  },
 );
 ```
-:::
 
+:::

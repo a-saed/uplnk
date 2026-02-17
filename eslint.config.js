@@ -12,14 +12,8 @@ export default tseslint.config(
     ],
   },
   js.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.recommended,
   {
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.json", "./packages/*/tsconfig.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
     rules: {
       // Disable rules that are too strict for tests
       "@typescript-eslint/no-explicit-any": "warn",
@@ -45,15 +39,6 @@ export default tseslint.config(
     files: ["**/*.test.ts", "**/*.spec.ts", "**/vitest.config.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unsafe-assignment": "off",
-      "@typescript-eslint/no-unsafe-member-access": "off",
-      "@typescript-eslint/no-unsafe-call": "off",
-      "@typescript-eslint/no-unsafe-return": "off",
-      "@typescript-eslint/unbound-method": "off",
     },
   },
-  {
-    files: ["**/*.js", "**/*.mjs", "**/*.cjs"],
-    ...tseslint.configs.disableTypeChecked,
-  }
 );
