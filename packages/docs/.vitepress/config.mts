@@ -2,8 +2,7 @@ import { defineConfig } from "vitepress";
 
 export default defineConfig({
   title: "uplnk",
-  description:
-    "Framework-agnostic file uploads with progress for signed URLs and HTTP endpoints.",
+  description: "Framework-agnostic file uploads with progress for signed URLs and HTTP endpoints.",
   base: "/uplnk/",
   themeConfig: {
     nav: [
